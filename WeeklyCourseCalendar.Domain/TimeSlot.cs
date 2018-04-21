@@ -9,11 +9,16 @@ namespace WeeklyCourseCalendar.Domain
         private readonly DateTime _schoolStartTime = DateTime.Parse("8:00 AM");
         private readonly DateTime _schoolEndTime = DateTime.Parse("9:00 PM");
         private readonly List<Class> _classes;
+
         private const int _acceptedNumberOfClasses = 10;
 
         public DaysOfWeek Day { get; }
 
         public DateTime Time { get; }
+
+        public int OccupiedSpacesCount => _classes.Count();
+
+        public bool CanAcceptClass => _classes.Count() < _acceptedNumberOfClasses;
 
         public string Id => $"{Day.ToString()}_{Time.ToShortTimeString()}".Replace(" ", "");
 
@@ -32,36 +37,6 @@ namespace WeeklyCourseCalendar.Domain
             Day = day;
             Time = time;
             _classes = new List<Class>(_acceptedNumberOfClasses);
-        }
-
-        public bool TryAddClass(Class spanningClass)
-        {
-            if (!CanOccupyThisSlot(spanningClass))
-            {
-                return false;
-            }
-
-            _classes.Add(spanningClass);
-            return true;
-        }
-
-        public void AddClasses(IEnumerable<Class> spanningClasses)
-        {
-            _classes.AddRange(spanningClasses);
-        }
-
-        private bool CanOccupyThisSlot(Class spanningClass)
-        {
-            if (!spanningClass.Days.HasFlag(Day))
-            {
-                return false;
-            }
-
-            if (Time < spanningClass.StartTime || Time > spanningClass.EndTime)
-            {
-                return false;
-            }
-            return true;
         }
 
         private bool IsSchoolDay(DaysOfWeek day)
@@ -85,9 +60,39 @@ namespace WeeklyCourseCalendar.Domain
                 time.TimeOfDay > _schoolEndTime.TimeOfDay) ? false : true;
         }
 
-        private bool CanAccomodateNMoreClasses(int n)
+        public IEnumerable<Class> GetClasses()
         {
-            return ((_classes.Count + n) <= _classes.Capacity) ? true : false;
+            return _classes;
+        }
+
+        public void AddClass(Class @class)
+        {
+            if (!CanOccupyThisSlot(@class))
+            {
+                throw new InvalidOperationException("The given class cannot be placed in this slot. " +
+                    "Please check that this slot falls within its day and time");
+            }
+
+            if (!CanAcceptClass)
+            {
+                throw new InvalidOperationException("The given class cannot be placed in this slot. " +
+                    $"The slot has reached its maximum capacity of {_acceptedNumberOfClasses}");
+            }
+            _classes.Add(@class);
+        }
+
+        private bool CanOccupyThisSlot(Class @class)
+        {
+            if (!IsSchoolDay(@class.Days))
+            {
+                return false;
+            }
+
+            if (Time < @class.StartTime || Time > @class.EndTime)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
