@@ -94,5 +94,25 @@ namespace WeeklyCourseCalendar.Domain
             }
             return true;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj is TimeSlot timeSlot)
+            {
+                return Id.Equals(timeSlot.Id);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }
