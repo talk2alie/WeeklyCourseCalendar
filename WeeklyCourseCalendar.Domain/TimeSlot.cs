@@ -18,7 +18,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public int OccupiedSpacesCount => _classes.Count();
 
-        public bool CanAcceptClass => _classes.Count() < _acceptedNumberOfClasses;
+        public bool IsFull => _classes.Count() == _acceptedNumberOfClasses;
 
         public string Id => $"{Day.ToString()}_{Time.ToShortTimeString()}".Replace(" ", "");
 
@@ -67,25 +67,30 @@ namespace WeeklyCourseCalendar.Domain
 
         public void AddClass(Class @class)
         {
-            if (!CanOccupyThisSlot(@class))
+            if (!ClassCanOccupyThisSlot(@class))
             {
                 throw new InvalidOperationException("The given class cannot be placed in this slot. " +
                     "Please check that this slot falls within its day and time");
             }
 
-            if (!CanAcceptClass)
+            if (IsFull)
             {
                 throw new InvalidOperationException("The given class cannot be placed in this slot. " +
                     $"The slot has reached its maximum capacity of {_acceptedNumberOfClasses}");
             }
 
-            if (!_classes.Add(@class))
+            if (!CanAddClass(@class))
             {
                 throw new InvalidOperationException("The given class already exists in the slot");
             }
         }
 
-        private bool CanOccupyThisSlot(Class @class)
+        private bool CanAddClass(Class @class)
+        {
+            return _classes.Add(@class);
+        }
+
+        private bool ClassCanOccupyThisSlot(Class @class)
         {
             if (!IsSchoolDay(@class.Days))
             {
