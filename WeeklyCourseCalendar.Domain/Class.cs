@@ -8,6 +8,8 @@ namespace WeeklyCourseCalendar.Domain
 
         public string Section { get; set; }
 
+        public string Title { get; set; }
+
         public DaysOfWeek Days { get; set; }
 
         public DateTime StartTime { get; set; }
@@ -17,5 +19,12 @@ namespace WeeklyCourseCalendar.Domain
         public string Location { get; set; }
 
         public string Instructors { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}-{Section}{Environment.NewLine}" +
+                   $"{Title}{Environment.NewLine}" +
+                   $"{StartTime.ToShortTimeString()}-{EndTime.ToShortTimeString()}";
+        }
     }
 }
