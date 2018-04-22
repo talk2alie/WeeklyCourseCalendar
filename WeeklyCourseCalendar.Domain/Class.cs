@@ -29,7 +29,7 @@ namespace WeeklyCourseCalendar.Domain
 
             if (obj is Class @class)
             {
-                return ToString().Equals(@class.ToString());
+                return Name.Equals(@class.Name) && Section.Equals(@class.Section);
             }
 
             return false;
@@ -37,7 +37,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+            return Name.GetHashCode() ^ Section.GetHashCode();
         }
 
         public override string ToString()
