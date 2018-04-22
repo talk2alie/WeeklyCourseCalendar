@@ -20,7 +20,6 @@ namespace WeeklyCourseCalendar.Domain
 
         public string Instructors { get; set; }
 
-        // override object.Equals
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -36,7 +35,6 @@ namespace WeeklyCourseCalendar.Domain
             return false;
         }
 
-        // override object.GetHashCode
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
