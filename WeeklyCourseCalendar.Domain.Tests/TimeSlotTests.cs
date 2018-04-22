@@ -14,7 +14,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             _timeSlot = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("10:05 AM"));
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void TimeSlotCreation_SchoolDayAndTime_CreatesInstance()
         {
             // Arrange
@@ -35,7 +35,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.Equal(expectedTimeSlotId, actualTimeSlotId);
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void TimeSlotCreation_NonSchoolDay_ThrowsArgumentOutOfRangeException()
         {
             // Arrange
@@ -50,7 +50,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.IsType<ArgumentOutOfRangeException>(expectedException);
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void TimeSlotCreation_NonSchoolHours_ThrowsArgumentOutOfRangeException()
         {
             // Arrange
@@ -65,7 +65,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.IsType<ArgumentOutOfRangeException>(expectedException);
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void AddClass_AcceptableClass_AddsClassSuccessfully()
         {
             // Arrange
@@ -90,7 +90,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.Equal(expectedClassesCount, actualClassesCount);
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void AddClass_ClassEndsBeforeSlotTime_ThrowsInvalidOperationException()
         {
             // Arrange
@@ -113,7 +113,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.IsType<InvalidOperationException>(expectedException);
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void AddClass_ClassStartsAfterSlotTime_ThrowsInvalidOperationException()
         {
             // Arrange
@@ -136,7 +136,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.IsType<InvalidOperationException>(expectedException);
         }
 
-        [Fact, Trait("Category", "TimeSlot_Tests")]
+        [Fact, Trait("Category", "TimeSlot")]
         public void AddClass_ClassHasNonSchoolDay_ThrowsInvalidOperationException()
         {
             // Arrange
@@ -157,6 +157,62 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Assert
             Assert.NotNull(expectedException);
             Assert.IsType<InvalidOperationException>(expectedException);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void Equals_ObjectsWithSameReference_ReturnsTrue()
+        {
+            // Arrange
+            var timeSlot = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            TimeSlot copiedReference = timeSlot;
+
+            // Act
+            bool areEqual = timeSlot.Equals(copiedReference);
+
+            // Assert
+            Assert.True(areEqual);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void Equals_ObjectsWithSameDayAndTime_ReturnsTrue()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var rightSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+
+            // Act
+            bool areEqual = leftSide.Equals(rightSide);
+
+            // Assert
+            Assert.True(areEqual);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void Equals_ObjectsWithDifferentDay_ReturnsFalse()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("6:15 PM"));
+            var rightSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+
+            // Act
+            bool areEqual = leftSide.Equals(rightSide);
+
+            // Assert
+            Assert.False(areEqual);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void Equals_ObjectsWithDifferentTime_ReturnsFalse()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            var rightSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+
+            // Act
+            bool areEqual = leftSide.Equals(rightSide);
+
+            // Assert
+            Assert.False(areEqual);
         }
     }
 }
