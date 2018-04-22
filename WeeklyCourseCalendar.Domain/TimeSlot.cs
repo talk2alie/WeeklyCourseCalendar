@@ -22,6 +22,8 @@ namespace WeeklyCourseCalendar.Domain
 
         public string Id => $"{Day.ToString()}_{Time.ToShortTimeString()}".Replace(" ", "");
 
+        public int MaximumCapacity => _acceptedNumberOfClasses;
+
         public TimeSlot(DaysOfWeek day, DateTime time)
         {
             if (!IsSchoolDay(day))
