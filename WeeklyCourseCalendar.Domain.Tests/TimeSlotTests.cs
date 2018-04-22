@@ -160,6 +160,41 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
+        public void AddClass_DuplicateClasses_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            var newClass = new Class
+            {
+                Days = DaysOfWeek.Monday,
+                EndTime = DateTime.Parse("12:00 PM"),
+                Instructors = "Mary Joe",
+                Location = "Mendel 154",
+                Name = "CSC 1210",
+                Section = "001",
+                StartTime = DateTime.Parse("10:00 AM")
+            };
+            _timeSlot.AddClass(newClass);
+
+            var duplicateClass = new Class
+            {
+                Days = DaysOfWeek.Monday,
+                EndTime = DateTime.Parse("12:00 PM"),
+                Instructors = "Mary Joe",
+                Location = "Mendel 154",
+                Name = "CSC 1210",
+                Section = "001",
+                StartTime = DateTime.Parse("10:00 AM")
+            };
+
+            // Act
+            Exception expectedException = Record.Exception(() => _timeSlot.AddClass(duplicateClass));
+
+            // Assert
+            Assert.NotNull(expectedException);
+            Assert.IsType<InvalidOperationException>(expectedException);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
         public void Equals_ObjectsWithSameReference_ReturnsTrue()
         {
             // Arrange

@@ -20,6 +20,28 @@ namespace WeeklyCourseCalendar.Domain
 
         public string Instructors { get; set; }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj is Class @class)
+            {
+                return ToString().Equals(@class.ToString());
+            }
+
+            return false;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
         public override string ToString()
         {
             return $"{Name}-{Section}{Environment.NewLine}" +

@@ -78,7 +78,11 @@ namespace WeeklyCourseCalendar.Domain
                 throw new InvalidOperationException("The given class cannot be placed in this slot. " +
                     $"The slot has reached its maximum capacity of {_acceptedNumberOfClasses}");
             }
-            _classes.Add(@class);
+
+            if (!_classes.Add(@class))
+            {
+                throw new InvalidOperationException("The given class already exists in the slot");
+            }
         }
 
         private bool CanOccupyThisSlot(Class @class)
