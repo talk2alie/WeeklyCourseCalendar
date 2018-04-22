@@ -139,7 +139,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "Class")]
-        public void GetHashCode_SameReferenceObjects_HaveSameHashCode()
+        public void GetHashCode_SameReferenceObjects_HaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new Class
@@ -165,7 +165,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "Class")]
-        public void GetHashCode_ObjectsWithSameNameAndSection_HaveSameHashCode()
+        public void GetHashCode_ObjectsWithSameNameAndSection_HaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new Class
