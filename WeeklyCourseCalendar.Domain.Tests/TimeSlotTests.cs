@@ -219,7 +219,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void Equals_ObjectsWithSameReference_ReturnsTrue()
+        public void Equals_ObjectsWithSameReference_AreEqual()
         {
             // Arrange
             var timeSlot = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
@@ -233,7 +233,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void Equals_ObjectsWithSameDayAndTime_ReturnsTrue()
+        public void Equals_ObjectsWithSameDayAndTime_AreEqual()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
@@ -247,7 +247,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void Equals_ObjectsWithDifferentDay_ReturnsFalse()
+        public void Equals_ObjectsWithDifferentDay_AreNotEqual()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("6:15 PM"));
@@ -261,7 +261,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void Equals_ObjectsWithDifferentTime_ReturnsFalse()
+        public void Equals_ObjectsWithDifferentTime_AreNotEqual()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
@@ -275,7 +275,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void Equals_ObjectsOfDifferentTypes_ReturnsFalse()
+        public void Equals_ObjectsOfDifferentTypes_AreNotEqual()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
@@ -289,7 +289,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void GetHashCode_ObjectsWithSameReference_ReturnsTrue()
+        public void GetHashCode_ObjectsWithSameReference_HaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
@@ -304,7 +304,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void GetHashCode_ObjectsWithSameDayAndTime_ReturnsTrue()
+        public void GetHashCode_ObjectsWithSameDayAndTime_HaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
@@ -319,7 +319,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void GetHashCode_ObjectsWithDifferentDay_ReturnsFalse()
+        public void GetHashCode_ObjectsWithDifferentDay_DoNotHaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("6:15 PM"));
@@ -334,7 +334,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
-        public void GetHashCode_ObjectsWithDifferentTime_ReturnsFalse()
+        public void GetHashCode_ObjectsWithDifferentTime_DoNotHaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
