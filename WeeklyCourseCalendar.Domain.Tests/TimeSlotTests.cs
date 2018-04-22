@@ -214,5 +214,79 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Assert
             Assert.False(areEqual);
         }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void Equals_ObjectsOfDifferentTypes_ReturnsFalse()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            string rightSide = "Hello World";
+
+            // Act
+            bool areEqual = leftSide.Equals(rightSide);
+
+            // Assert
+            Assert.False(areEqual);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void GetHashCode_ObjectsWithSameReference_ReturnsTrue()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            TimeSlot rightSide = leftSide;
+
+            // Act
+            int leftSideHashCode = leftSide.GetHashCode();
+            int rightSideHashCode = rightSide.GetHashCode();
+
+            // Assert
+            Assert.Equal(leftSideHashCode, rightSideHashCode);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void GetHashCode_ObjectsWithSameDayAndTime_ReturnsTrue()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var rightSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+
+            // Act
+            int leftSideHashCode = leftSide.GetHashCode();
+            int rightSideHashCode = rightSide.GetHashCode();
+
+            // Assert
+            Assert.Equal(leftSideHashCode, rightSideHashCode);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void GetHashCode_ObjectsWithDifferentDay_ReturnsFalse()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("6:15 PM"));
+            var rightSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+
+            // Act
+            int leftSideHashCode = leftSide.GetHashCode();
+            int rightSideHashCode = rightSide.GetHashCode();
+
+            // Assert
+            Assert.NotEqual(leftSideHashCode, rightSideHashCode);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void GetHashCode_ObjectsWithDifferentTime_ReturnsFalse()
+        {
+            // Arrange
+            var leftSide = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            var rightSide = new TimeSlot(day: DaysOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+
+            // Act
+            int leftSideHashCode = leftSide.GetHashCode();
+            int rightSideHashCode = rightSide.GetHashCode();
+
+            // Assert
+            Assert.NotEqual(leftSideHashCode, rightSideHashCode);
+        }
     }
 }
