@@ -195,6 +195,30 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "TimeSlot")]
+        public void AddClass_SlotIsFull_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            PopulateSlotWithNClasses(n: 10);
+            var unacceptable = new Class
+            {
+                Days = DaysOfWeek.Monday,
+                EndTime = DateTime.Parse("12:00 PM"),
+                Instructors = "Mary Joe",
+                Location = "Mendel 154",
+                Name = "CSC 1210",
+                Section = "001",
+                StartTime = DateTime.Parse("10:00 AM")
+            };
+
+            // Act
+            Exception expectedException = Record.Exception(() => _timeSlot.AddClass(unacceptable));
+
+            // Assert
+            Assert.NotNull(expectedException);
+            Assert.IsType<InvalidOperationException>(expectedException);
+        }
+
+        [Fact, Trait("Category", "TimeSlot")]
         public void Equals_ObjectsWithSameReference_ReturnsTrue()
         {
             // Arrange
@@ -336,6 +360,26 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Assert
             Assert.Equal(toStringValue, idValue);
+        }
+
+        private void PopulateSlotWithNClasses(int n)
+        {
+            int index = 0;
+            while (index < n)
+            {
+                _timeSlot.AddClass(new Class
+                {
+                    Days = DaysOfWeek.Monday,
+                    EndTime = DateTime.Parse("10:50 AM"),
+                    Instructors = $"Instructor Number{index + 1}",
+                    Location = $"Location Number{index + 1}",
+                    Name = $"Class Number{index + 1}",
+                    Section = $"00{index + 1}",
+                    StartTime = DateTime.Parse("10:00 AM"),
+                    Title = $"Title Number{index + 1}"
+                });
+                index++;
+            }
         }
     }
 }
