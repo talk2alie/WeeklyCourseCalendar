@@ -8,7 +8,7 @@ namespace WeeklyCourseCalendar.Domain
     {
         private readonly DateTime _schoolStartTime = DateTime.Parse("8:00 AM");
         private readonly DateTime _schoolEndTime = DateTime.Parse("9:00 PM");
-        private readonly List<Class> _classes;
+        private readonly HashSet<Class> _classes;
 
         private const int _acceptedNumberOfClasses = 10;
 
@@ -36,7 +36,7 @@ namespace WeeklyCourseCalendar.Domain
 
             Day = day;
             Time = time;
-            _classes = new List<Class>(_acceptedNumberOfClasses);
+            _classes = new HashSet<Class>(_acceptedNumberOfClasses);
         }
 
         private bool IsSchoolDay(DaysOfWeek day)
@@ -62,7 +62,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public IEnumerable<Class> GetClasses()
         {
-            return _classes;
+            return _classes.ToList();
         }
 
         public void AddClass(Class @class)
