@@ -261,5 +261,32 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Assert
             Assert.NotEqual(leftSideHashCode, rightSideHashCode);
         }
+
+        [Fact, Trait("Category", "Class")]
+        public void ToString_ValidClass_ReturnsClassDiplayText()
+        {
+            // Arrange
+            var @class = new Class
+            {
+                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                EndTime = DateTime.Parse("9:00 PM"),
+                Instructors = "Kristen Obermyer",
+                Location = "Mendel G87",
+                Name = "CSC 1100",
+                Section = "001",
+                StartTime = DateTime.Parse("6:15 PM"),
+                Title = "Programming For All"
+            };
+
+            string expectedToStringValue = $"{@class.Name}-{@class.Section}{Environment.NewLine}" +
+                   $"{@class.Title}{Environment.NewLine}" +
+                   $"{@class.StartTime.ToShortTimeString()}-{@class.EndTime.ToShortTimeString()}";
+
+            // Act
+            string actualToStringValue = @class.ToString();
+
+            // Assert
+            Assert.Equal(expectedToStringValue, actualToStringValue);
+        }
     }
 }
