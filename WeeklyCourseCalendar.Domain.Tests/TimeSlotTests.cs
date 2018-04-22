@@ -288,5 +288,19 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Assert
             Assert.NotEqual(leftSideHashCode, rightSideHashCode);
         }
+
+        [Fact, Trait("Category", "TimeSlot")]
+        public void ToString_ValidTimeSlot_ReturnsId()
+        {
+            // Arrange
+            var validTimeSlot = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+
+            // Act
+            string toStringValue = validTimeSlot.ToString();
+            string idValue = validTimeSlot.Id;
+
+            // Assert
+            Assert.Equal(toStringValue, idValue);
+        }
     }
 }
