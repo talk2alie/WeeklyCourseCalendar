@@ -32,7 +32,7 @@ namespace WeeklyCourseCalendar.Domain
         {
             var schoolStartTime = DateTime.Parse("8:00 AM");
             var schoolEndTime = DateTime.Parse("9:00 PM");
-            const int slotDuration = 5;
+            const int slotDurationInMinutes = 5;
 
             _schoolDays.ForEach(schoolDay =>
             {
@@ -41,7 +41,7 @@ namespace WeeklyCourseCalendar.Domain
                 while (currentTime.TimeOfDay <= schoolEndTime.TimeOfDay)
                 {
                     timeSlotsForDay.Add(new TimeSlot(day: schoolDay, time: currentTime));
-                    currentTime = currentTime.AddMinutes(slotDuration);
+                    currentTime = currentTime.AddMinutes(slotDurationInMinutes);
                 }
                 _availableSlotsPerDay.Add(schoolDay, timeSlotsForDay);
             });
