@@ -39,7 +39,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void TimeSlotCreation_NonSchoolDay_ThrowsArgumentOutOfRangeException()
         {
             // Arrange
-            DaysOfWeek invalidDay = DaysOfWeek.Monday | DaysOfWeek.Saturday;
+            DaysOfWeek invalidDay = DaysOfWeek.Saturday;
             var time = DateTime.Parse("8:00 AM");
 
             // Act

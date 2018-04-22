@@ -26,12 +26,12 @@ namespace WeeklyCourseCalendar.Domain
 
         public TimeSlot(DaysOfWeek day, DateTime time)
         {
-            if (!IsSchoolDay(day))
+            if (TheGivenDayIsNotASchoolDay(day))
             {
                 throw new ArgumentOutOfRangeException(nameof(day), "The provided day is not a valid school day");
             }
 
-            if (!IsDuringSchoolHours(time))
+            if (TheGivenTimeIsOutsideSchoolHours(time))
             {
                 throw new ArgumentOutOfRangeException(nameof(time), "The provided time is outside normal school hours");
             }
@@ -41,25 +41,16 @@ namespace WeeklyCourseCalendar.Domain
             _classes = new HashSet<Class>(_acceptedNumberOfClasses);
         }
 
-        private bool IsSchoolDay(DaysOfWeek day)
+        private bool TheGivenDayIsNotASchoolDay(DaysOfWeek day)
         {
-            if (day == DaysOfWeek.Saturday || day == DaysOfWeek.Sunday)
-            {
-                return false;
-            }
-
-            if (day.HasFlag(DaysOfWeek.Saturday) || day.HasFlag(DaysOfWeek.Sunday))
-            {
-                return false;
-            }
-
-            return true;
+            // At Villanova University, weekend days are not school days
+            return (day.HasFlag(DaysOfWeek.Saturday) || day.HasFlag(DaysOfWeek.Sunday)) ? true : false;
         }
 
-        private bool IsDuringSchoolHours(DateTime time)
+        private bool TheGivenTimeIsOutsideSchoolHours(DateTime time)
         {
             return (time.TimeOfDay < _schoolStartTime.TimeOfDay ||
-                time.TimeOfDay > _schoolEndTime.TimeOfDay) ? false : true;
+                time.TimeOfDay > _schoolEndTime.TimeOfDay) ? true : false;
         }
 
         public IEnumerable<Class> GetClasses()
@@ -69,7 +60,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public void AddClass(Class @class)
         {
-            if (!ClassCanOccupyThisSlot(@class))
+            if (TheGivenClassCannnotOccupyThisSlot(@class))
             {
                 throw new InvalidOperationException("The given class cannot be placed in this slot. " +
                     "Please check that this slot falls within its day and time");
@@ -81,29 +72,29 @@ namespace WeeklyCourseCalendar.Domain
                     $"The slot has reached its maximum capacity of {_acceptedNumberOfClasses}");
             }
 
-            if (!CanAddClass(@class))
+            if (TheGivenClassAlreadyExists(@class))
             {
                 throw new InvalidOperationException("The given class already exists in the slot");
             }
         }
 
-        private bool CanAddClass(Class @class)
+        private bool TheGivenClassCannnotOccupyThisSlot(Class @class)
         {
-            return _classes.Add(@class);
-        }
-
-        private bool ClassCanOccupyThisSlot(Class @class)
-        {
-            if (!IsSchoolDay(@class.Days))
+            if (TheGivenDayIsNotASchoolDay(@class.Days))
             {
-                return false;
+                return true;
             }
 
             if (Time < @class.StartTime || Time > @class.EndTime)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
+        }
+
+        private bool TheGivenClassAlreadyExists(Class @class)
+        {
+            return !_classes.Add(@class);
         }
 
         public override bool Equals(object obj)
