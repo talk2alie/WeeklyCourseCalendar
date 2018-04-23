@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeeklyCourseCalendar.Domain.Helpers;
 
 namespace WeeklyCourseCalendar.Domain
 {
@@ -12,7 +13,7 @@ namespace WeeklyCourseCalendar.Domain
 
         private const int _acceptedNumberOfClasses = 10;
 
-        public DaysOfWeek Day { get; }
+        public DaysOfWeek Days { get; }
 
         public DateTime Time { get; }
 
@@ -20,7 +21,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public bool IsFull => _classes.Count() == _acceptedNumberOfClasses;
 
-        public string Id => $"{Day.ToString()}_{Time.ToShortTimeString()}".Replace(" ", "");
+        public string Id { get; }
 
         public int MaximumCapacity => _acceptedNumberOfClasses;
 
@@ -36,8 +37,9 @@ namespace WeeklyCourseCalendar.Domain
                 throw new ArgumentOutOfRangeException(nameof(time), "The provided time is outside normal school hours");
             }
 
-            Day = day;
+            Days = day;
             Time = time;
+            Id = TimeSlotHelpers.GenerateIdFromDaysAndTime(day, time);
             _classes = new HashSet<Class>(_acceptedNumberOfClasses);
         }
 

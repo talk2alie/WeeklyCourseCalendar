@@ -24,7 +24,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Act
             var timeSlot = new TimeSlot(day: DaysOfWeek.Monday, time: DateTime.Parse("8:00 AM"));
-            DaysOfWeek actualDay = timeSlot.Day;
+            DaysOfWeek actualDay = timeSlot.Days;
             DateTime actualTime = timeSlot.Time;
             string actualTimeSlotId = timeSlot.Id;
 

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using WeeklyCourseCalendar.Domain.Helpers;
 
 namespace WeeklyCourseCalendar.Domain
 {
     public class WeeklySchedule
     {
-        private readonly Dictionary<DaysOfWeek, HashSet<TimeSlot>> _availableSlotsPerDay;
-        private readonly List<DaysOfWeek> _schoolDays;
+        private readonly HashSet<TimeSlot> _allocatedTimeSlots;
 
         public string SemesterName { get; set; }
 
@@ -14,37 +15,42 @@ namespace WeeklyCourseCalendar.Domain
 
         public DateTime SemesterEndDate { get; set; }
 
+        public int AllocatedTimeSlotsCount => _allocatedTimeSlots.Count;
+
         public WeeklySchedule()
         {
-            _schoolDays = new List<DaysOfWeek>
-            {
-                DaysOfWeek.Monday,
-                DaysOfWeek.Tuesday,
-                DaysOfWeek.Wednesday,
-                DaysOfWeek.Thursday,
-                DaysOfWeek.Friday
-            };
-            _availableSlotsPerDay = new Dictionary<DaysOfWeek, HashSet<TimeSlot>>();
-            CreateSlotsForSchoolDays();
+            const int maximumNumberOfSlots = 157;
+            _allocatedTimeSlots = new HashSet<TimeSlot>(maximumNumberOfSlots);
         }
 
-        private void CreateSlotsForSchoolDays()
+        public void AddClassToTimeSlots(Class @class)
         {
-            var schoolStartTime = DateTime.Parse("8:00 AM");
-            var schoolEndTime = DateTime.Parse("9:00 PM");
+            DateTime slotTime = @class.StartTime;
             const int slotDurationInMinutes = 5;
-
-            _schoolDays.ForEach(schoolDay =>
+            while (slotTime.TimeOfDay <= @class.EndTime.TimeOfDay)
             {
-                var timeSlotsForDay = new HashSet<TimeSlot>();
-                DateTime currentTime = schoolStartTime;
-                while (currentTime.TimeOfDay <= schoolEndTime.TimeOfDay)
-                {
-                    timeSlotsForDay.Add(new TimeSlot(day: schoolDay, time: currentTime));
-                    currentTime = currentTime.AddMinutes(slotDurationInMinutes);
-                }
-                _availableSlotsPerDay.Add(schoolDay, timeSlotsForDay);
-            });
+                TimeSlot timeSlot = FindOrCreateTimeSlotFromDaysAndTime(@class.Days, slotTime);
+                timeSlot.AddClass(@class);
+                slotTime = slotTime.AddMinutes(slotDurationInMinutes);
+            }
+        }
+
+        private TimeSlot FindOrCreateTimeSlotFromDaysAndTime(DaysOfWeek slotDays, DateTime slotTime)
+        {
+            string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(slotDays, slotTime);
+            TimeSlot timeSlot = _allocatedTimeSlots
+                .SingleOrDefault(slot => slot.Id.Equals(slotId, StringComparison.InvariantCulture));
+            if (timeSlot == null)
+            {
+                timeSlot = new TimeSlot(slotDays, slotTime);
+                _allocatedTimeSlots.Add(timeSlot);
+            }
+            return timeSlot;
+        }
+
+        public List<TimeSlot> GetAllocatedTimeSlots()
+        {
+            return _allocatedTimeSlots.ToList();
         }
     }
 }
