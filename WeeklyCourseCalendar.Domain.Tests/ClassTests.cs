@@ -280,7 +280,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             string expectedToStringValue = $"{@class.Name}-{@class.Section}{Environment.NewLine}" +
                    $"{@class.Title}{Environment.NewLine}" +
-                   $"{@class.StartTime.ToShortTimeString()}-{@class.EndTime.ToShortTimeString()}";
+                   $"{@class.StartTime.ToShortTimeString()} to {@class.EndTime.ToShortTimeString()}";
 
             // Act
             string actualToStringValue = @class.ToString();
