@@ -64,5 +64,30 @@ namespace WeeklyCourseCalendar.Domain
         {
             return _timeSlots.ToList();
         }
+
+        public void AddClass(Class newClass)
+        {
+            TimeSlot timeSlot = FindOrCreateTimeSlotForClass(newClass);
+            timeSlot.AddClass(newClass);
+        }
+
+        private TimeSlot FindOrCreateTimeSlotForClass(Class newClass)
+        {
+            TimeSpan classDuration = newClass.EndTime.TimeOfDay - newClass.StartTime.TimeOfDay;
+            const int slotDurationInMinutes = 5;
+            int numberOfTimeSlotsClassSpans = (int)classDuration.TotalMinutes / slotDurationInMinutes;
+
+            string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(newClass.Day, newClass.StartTime);
+            TimeSlot timeSlot = _timeSlots.SingleOrDefault(slot =>
+                slot.Id.Equals(slotId, StringComparison.InvariantCultureIgnoreCase) &&
+                slot.SlotSpan == numberOfTimeSlotsClassSpans);
+            if (timeSlot == null)
+            {
+                timeSlot = new TimeSlot(day: newClass.Day, time: newClass.StartTime, slotSpan: numberOfTimeSlotsClassSpans);
+                _timeSlots.Add(timeSlot);
+            }
+
+            return timeSlot;
+        }
     }
 }

@@ -47,5 +47,77 @@ namespace WeeklyCourseCalendar.Domain.Tests
             Assert.Equal(expectedSemesterStartDate, actualSemesterStartDate);
             Assert.Equal(expectedSemesterEndDate, actualSemesterEndDate);
         }
+
+        [Fact, Trait("Category", "WeeklySchedule")]
+        public void AddClass_2Hr40MinutesClassToEmptySchedule_CreatesTimeSlotThatSpans32Slots()
+        {
+            // Arrange
+            var newClass = new Class
+            {
+                Day = DayOfWeek.Wednesday,
+                EndTime = DateTime.Parse("8:50 PM"),
+                Instructors = " Mary Angela Papalaskari",
+                Location = "TBA",
+                Name = "CSC 1010",
+                Section = "100",
+                StartTime = DateTime.Parse("06:10 pm"),
+                Title = "Programming for All"
+            };
+            const int expectedSlotSpan = 32;
+
+            // Act
+            _weeklySchedule.AddClass(newClass);
+            int actualSlotSpan = _weeklySchedule.GetTimeSlots().FirstOrDefault().SlotSpan;
+
+            // Assert
+            Assert.Equal(expectedSlotSpan, actualSlotSpan);
+        }
+
+        [Fact, Trait("Category", "WeeklySchedule")]
+        public void AddClass_2Hr40MinutesClassToExistingSlot_AddsClassToTimeSlot()
+        {
+            // Arrange
+            AddClassToSchedule();
+            int expectedSlotsCount = _weeklySchedule.GetTimeSlots().Count();
+            const int classesAddedCount = 1;
+            int expectedClassesInSlotCount = _weeklySchedule.GetTimeSlots().First().OccupiedSpacesCount + classesAddedCount;
+
+            var classToAdd = new Class
+            {
+                Day = DayOfWeek.Wednesday,
+                EndTime = DateTime.Parse("8:50 PM"),
+                Instructors = " Mary Angela Papalaskari",
+                Location = "Mendel G87",
+                Name = "CSC 1020",
+                Section = "001",
+                StartTime = DateTime.Parse("06:10 pm"),
+                Title = "Introduction to Programming in C"
+            };
+
+            // Act
+            _weeklySchedule.AddClass(classToAdd);
+            int actualSlotsCount = _weeklySchedule.GetTimeSlots().Count();
+            int actualClassesInSlotCount = _weeklySchedule.GetTimeSlots().First().OccupiedSpacesCount;
+
+            // Assert
+            Assert.Equal(expectedSlotsCount, actualSlotsCount);
+            Assert.Equal(expectedClassesInSlotCount, actualClassesInSlotCount);
+        }
+
+        private void AddClassToSchedule()
+        {
+            var newClass = new Class
+            {
+                Day = DayOfWeek.Wednesday,
+                EndTime = DateTime.Parse("8:50 PM"),
+                Instructors = " Mary Angela Papalaskari",
+                Location = "TBA",
+                Name = "CSC 1010",
+                Section = "100",
+                StartTime = DateTime.Parse("06:10 pm"),
+                Title = "Programming for All"
+            };
+            _weeklySchedule.AddClass(newClass);
+        }
     }
 }
