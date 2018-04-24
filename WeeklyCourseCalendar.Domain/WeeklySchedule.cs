@@ -50,15 +50,7 @@ namespace WeeklyCourseCalendar.Domain
 
         private TimeSlot FindOrCreateTimeSlotFromDaysAndTime(DayOfWeek slotDays, DateTime slotTime)
         {
-            string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(slotDays, slotTime);
-            TimeSlot timeSlot = _availableTimeSlots
-                .SingleOrDefault(slot => slot.Id.Equals(slotId, StringComparison.InvariantCulture));
-            if (timeSlot == null)
-            {
-                timeSlot = new TimeSlot(slotDays, slotTime);
-                _availableTimeSlots.Add(timeSlot);
-            }
-            return timeSlot;
+            return null;
         }
 
         public List<TimeSlot> GetAllocatedTimeSlots()

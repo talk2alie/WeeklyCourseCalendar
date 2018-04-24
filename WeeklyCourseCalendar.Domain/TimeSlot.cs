@@ -13,7 +13,7 @@ namespace WeeklyCourseCalendar.Domain
 
         private const int _acceptedNumberOfClasses = 10;
 
-        public DayOfWeek Days { get; }
+        public DayOfWeek Day { get; }
 
         public DateTime Time { get; }
 
@@ -25,9 +25,9 @@ namespace WeeklyCourseCalendar.Domain
 
         public int MaximumCapacity => _acceptedNumberOfClasses;
 
-        public int SlotSpan { get; set; }
+        public int SlotSpan { get; }
 
-        public TimeSlot(DayOfWeek day, DateTime time)
+        public TimeSlot(DayOfWeek day, DateTime time, int slotSpan)
         {
             if (TheGivenDayIsNotASchoolDay(day))
             {
@@ -39,8 +39,9 @@ namespace WeeklyCourseCalendar.Domain
                 throw new ArgumentOutOfRangeException(nameof(time), "The provided time is outside normal school hours");
             }
 
-            Days = day;
+            Day = day;
             Time = time;
+            SlotSpan = slotSpan;
             Id = TimeSlotHelpers.GenerateIdFromDaysAndTime(day, time);
             _classes = new HashSet<Class>(_acceptedNumberOfClasses);
         }

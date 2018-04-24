@@ -9,7 +9,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
         public TimeSlotTests()
         {
-            _timeSlot = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("10:05 AM"));
+            _timeSlot = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("10:05 AM"), slotSpan: 1);
         }
 
         [Fact, Trait("Category", "TimeSlot")]
@@ -21,8 +21,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
             string expectedTimeSlotId = $"{expectedDay.ToString()}_{expectedTime.ToShortTimeString()}".Replace(" ", "");
 
             // Act
-            var timeSlot = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("8:00 AM"));
-            DayOfWeek actualDay = timeSlot.Days;
+            var timeSlot = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("8:00 AM"), slotSpan: 1);
+            DayOfWeek actualDay = timeSlot.Day;
             DateTime actualTime = timeSlot.Time;
             string actualTimeSlotId = timeSlot.Id;
 
@@ -41,7 +41,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             var time = DateTime.Parse("8:00 AM");
 
             // Act
-            Exception expectedException = Record.Exception(() => new TimeSlot(invalidDay, time));
+            Exception expectedException = Record.Exception(() => new TimeSlot(invalidDay, time, slotSpan: 1));
 
             // Assert
             Assert.NotNull(expectedException);
@@ -56,7 +56,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             var invalidTime = DateTime.Parse("7:00 AM");
 
             // Act
-            Exception expectedException = Record.Exception(() => new TimeSlot(day, invalidTime));
+            Exception expectedException = Record.Exception(() => new TimeSlot(day, invalidTime, slotSpan: 1));
 
             // Assert
             Assert.NotNull(expectedException);
@@ -223,7 +223,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void Equals_ObjectsWithSameReference_AreEqual()
         {
             // Arrange
-            var timeSlot = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var timeSlot = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
             TimeSlot copiedReference = timeSlot;
 
             // Act
@@ -237,8 +237,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void Equals_ObjectsWithSameDayAndTime_AreEqual()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
-            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
+            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
 
             // Act
             bool areEqual = leftSide.Equals(rightSide);
@@ -251,8 +251,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void Equals_ObjectsWithDifferentDay_AreNotEqual()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("6:15 PM"));
-            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
+            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
 
             // Act
             bool areEqual = leftSide.Equals(rightSide);
@@ -265,8 +265,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void Equals_ObjectsWithDifferentTime_AreNotEqual()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
-            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"), slotSpan: 1);
+            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
 
             // Act
             bool areEqual = leftSide.Equals(rightSide);
@@ -279,7 +279,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void Equals_ObjectsOfDifferentTypes_AreNotEqual()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"), slotSpan: 1);
             string rightSide = "Hello World";
 
             // Act
@@ -293,7 +293,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void GetHashCode_ObjectsWithSameReference_HaveTheSameHashCode()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"), slotSpan: 1);
             TimeSlot rightSide = leftSide;
 
             // Act
@@ -308,8 +308,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void GetHashCode_ObjectsWithSameDayAndTime_HaveTheSameHashCode()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
-            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
+            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
 
             // Act
             int leftSideHashCode = leftSide.GetHashCode();
@@ -323,8 +323,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void GetHashCode_ObjectsWithDifferentDay_DoNotHaveTheSameHashCode()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("6:15 PM"));
-            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
+            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
 
             // Act
             int leftSideHashCode = leftSide.GetHashCode();
@@ -338,8 +338,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void GetHashCode_ObjectsWithDifferentTime_DoNotHaveTheSameHashCode()
         {
             // Arrange
-            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
-            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"));
+            var leftSide = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"), slotSpan: 1);
+            var rightSide = new TimeSlot(day: DayOfWeek.Friday, time: DateTime.Parse("6:15 PM"), slotSpan: 1);
 
             // Act
             int leftSideHashCode = leftSide.GetHashCode();
@@ -353,7 +353,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void ToString_ValidTimeSlot_ReturnsId()
         {
             // Arrange
-            var validTimeSlot = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"));
+            var validTimeSlot = new TimeSlot(day: DayOfWeek.Monday, time: DateTime.Parse("5:15 PM"), slotSpan: 1);
 
             // Act
             string toStringValue = validTimeSlot.ToString();
