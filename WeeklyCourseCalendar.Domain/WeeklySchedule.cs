@@ -14,10 +14,14 @@ namespace WeeklyCourseCalendar.Domain
 
         public DateTime SemesterEndDate { get; set; }
 
-        public string SemesterName { get; set; }
+        public string SemesterName { get; }
 
-        public WeeklySchedule()
+        public WeeklySchedule(string semesterName, DateTime semesterStartDate, DateTime semesterEndDate)
         {
+            SemesterName = semesterName;
+            SemesterStartDate = semesterStartDate;
+            SemesterEndDate = semesterEndDate;
+
             _schoolDays = new HashSet<DayOfWeek>
             {
                 DayOfWeek.Monday,
