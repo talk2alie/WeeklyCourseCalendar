@@ -7,55 +7,51 @@ namespace WeeklyCourseCalendar.Domain
 {
     public class WeeklySchedule
     {
-        private readonly HashSet<TimeSlot> _availableTimeSlots;
-
-        public List<DayOfWeek> SchooldDays => new List<DayOfWeek>
-        {
-            DayOfWeek.Monday,
-            DayOfWeek.Tuesday,
-            DayOfWeek.Wednesday,
-            DayOfWeek.Thursday,
-            DayOfWeek.Friday
-        };
-
-        public DateTime SchoolStartTime => DateTime.Parse("8:00 AM");
-
-        public DateTime SchoolEndTime => DateTime.Parse("9:00 PM");
-
-        public string SemesterName { get; set; }
+        private readonly HashSet<DayOfWeek> _schoolDays;
+        private readonly HashSet<DateTime> _schoolTimes;
 
         public DateTime SemesterStartDate { get; set; }
 
         public DateTime SemesterEndDate { get; set; }
 
-        public int AllocatedTimeSlotsCount => _availableTimeSlots.Count;
+        public string SemesterName { get; set; }
 
         public WeeklySchedule()
         {
-            const int maximumNumberOfSlots = 157;
-            _availableTimeSlots = new HashSet<TimeSlot>(maximumNumberOfSlots);
-        }
-
-        public void AddClassToTimeSlots(Class @class)
-        {
-            DateTime slotTime = @class.StartTime;
-            const int slotDurationInMinutes = 5;
-            while (slotTime.TimeOfDay <= @class.EndTime.TimeOfDay)
+            _schoolDays = new HashSet<DayOfWeek>
             {
-                TimeSlot timeSlot = FindOrCreateTimeSlotFromDaysAndTime(@class.Day, slotTime);
-                timeSlot.AddClass(@class);
-                slotTime = slotTime.AddMinutes(slotDurationInMinutes);
+                DayOfWeek.Monday,
+                DayOfWeek.Tuesday,
+                DayOfWeek.Wednesday,
+                DayOfWeek.Thursday,
+                DayOfWeek.Friday
+            };
+            _schoolTimes = new HashSet<DateTime>();
+            LoadSchoolTimes();
+        }
+
+        public IEnumerable<DayOfWeek> GetSchoolDays()
+        {
+            return _schoolDays;
+        }
+
+        public IEnumerable<DateTime> GetSchoolTimes()
+        {
+            return _schoolTimes;
+        }
+
+        private void LoadSchoolTimes()
+        {
+            var schoolStartTime = DateTime.Parse("8:00 AM");
+            var schoolEndTime = DateTime.Parse("9:00 PM");
+
+            const int slotDurationInMinutes = 5;
+            DateTime time = schoolStartTime;
+            while (time.TimeOfDay <= schoolEndTime.TimeOfDay)
+            {
+                _schoolTimes.Add(time);
+                time = time.AddMinutes(slotDurationInMinutes);
             }
-        }
-
-        private TimeSlot FindOrCreateTimeSlotFromDaysAndTime(DayOfWeek slotDays, DateTime slotTime)
-        {
-            return null;
-        }
-
-        public List<TimeSlot> GetAllocatedTimeSlots()
-        {
-            return _availableTimeSlots.ToList();
         }
     }
 }
