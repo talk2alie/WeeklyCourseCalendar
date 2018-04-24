@@ -29,7 +29,14 @@ namespace WeeklyCourseCalendar.Domain
 
             if (obj is Class @class)
             {
-                return Name.Equals(@class.Name) && Section.Equals(@class.Section);
+                return Name.Equals(@class.Name, StringComparison.InvariantCultureIgnoreCase) &&
+                    Section.Equals(@class.Section, StringComparison.InvariantCultureIgnoreCase) &&
+                    Title.Equals(@class.Title, StringComparison.InvariantCultureIgnoreCase) &&
+                    Day == @class.Day &&
+                    StartTime.TimeOfDay == @class.StartTime.TimeOfDay &&
+                    EndTime.TimeOfDay == @class.EndTime.TimeOfDay &&
+                    Location.Equals(@class.Location, StringComparison.InvariantCultureIgnoreCase) &&
+                    Instructors.Equals(@class.Instructors, StringComparison.InvariantCultureIgnoreCase);
             }
 
             return false;
@@ -37,7 +44,10 @@ namespace WeeklyCourseCalendar.Domain
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode() ^ Section.GetHashCode();
+            return (Name.GetHashCode() ^ Section.GetHashCode()) +
+                (Title.GetHashCode() ^ Day.GetHashCode()) +
+                (StartTime.GetHashCode() ^ EndTime.GetHashCode()) +
+                (Location.GetHashCode() ^ Instructors.GetHashCode());
         }
 
         public override string ToString()

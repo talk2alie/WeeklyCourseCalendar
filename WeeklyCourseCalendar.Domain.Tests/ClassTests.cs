@@ -44,12 +44,12 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "Class")]
-        public void Equals_ObjectsWithSameNameAndSection_AreEqual()
+        public void Equals_ObjectsWithSamePropertyValues_AreEqual()
         {
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Wednesday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -61,13 +61,13 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
-                EndTime = DateTime.Parse("10:00 AM"),
+                Day = DayOfWeek.Wednesday,
+                EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
-                Location = "Mendel G86",
+                Location = "Mendel G87",
                 Name = "CSC 1100",
                 Section = "001",
-                StartTime = DateTime.Parse("10:50 AM"),
+                StartTime = DateTime.Parse("6:15 PM"),
                 Title = "Programming For All"
             };
 
@@ -79,12 +79,12 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "Class")]
-        public void Equals_ObjectsWithDifferentNameAndOrSection_AreNotEqual()
+        public void Equals_ObjectsWithDifferentPropertyValues_AreNotEqual()
         {
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -96,7 +96,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G86",
@@ -119,7 +119,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Wednesday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -144,7 +144,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -165,12 +165,12 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "Class")]
-        public void GetHashCode_ObjectsWithSameNameAndSection_HaveTheSameHashCode()
+        public void GetHashCode_ObjectsWithSamePropertyValues_HaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -182,13 +182,13 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
-                EndTime = DateTime.Parse("10:00 AM"),
+                Day = DayOfWeek.Monday,
+                EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
-                Location = "Mendel G86",
+                Location = "Mendel G87",
                 Name = "CSC 1100",
                 Section = "001",
-                StartTime = DateTime.Parse("10:50 AM"),
+                StartTime = DateTime.Parse("6:15 PM"),
                 Title = "Programming For All"
             };
 
@@ -201,12 +201,12 @@ namespace WeeklyCourseCalendar.Domain.Tests
         }
 
         [Fact, Trait("Category", "Class")]
-        public void GetHashCode_ObjectsWithDifferentNameAndOrSection_DoNotHaveTheSameHashCode()
+        public void GetHashCode_ObjectsWithDifferentPropertyValues_DoNotHaveTheSameHashCode()
         {
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -218,7 +218,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Friday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G86",
@@ -242,7 +242,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -268,7 +268,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var @class = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",

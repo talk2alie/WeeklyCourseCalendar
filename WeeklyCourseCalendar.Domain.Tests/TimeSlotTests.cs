@@ -71,13 +71,14 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var acceptableClass = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("12:00 PM"),
                 Instructors = "Mary Joe",
                 Location = "Mendel 154",
                 Name = "CSC 1210",
                 Section = "001",
-                StartTime = DateTime.Parse("8:05 AM")
+                StartTime = DateTime.Parse("8:05 AM"),
+                Title = "Introduction to Programming with Java"
             };
             const int addedClassCount = 1;
             int expectedClassesCount = _timeSlot.OccupiedSpacesCount + addedClassCount;
@@ -96,7 +97,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var unacceptableClass = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Mary Joe",
                 Location = "Mendel 154",
@@ -119,7 +120,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var unacceptableClass = new Class
             {
-                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:20 AM"),
                 Instructors = "Mary Joe",
                 Location = "Mendel 154",
@@ -171,7 +172,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
                 Location = "Mendel 154",
                 Name = "CSC 1210",
                 Section = "001",
-                StartTime = DateTime.Parse("10:00 AM")
+                StartTime = DateTime.Parse("10:00 AM"),
+                Title = "Introduction to Programming"
             };
             _timeSlot.AddClass(newClass);
 
@@ -183,7 +185,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
                 Location = "Mendel 154",
                 Name = "CSC 1210",
                 Section = "001",
-                StartTime = DateTime.Parse("10:00 AM")
+                StartTime = DateTime.Parse("10:00 AM"),
+                Title = "Introduction to Programming"
             };
 
             // Act
