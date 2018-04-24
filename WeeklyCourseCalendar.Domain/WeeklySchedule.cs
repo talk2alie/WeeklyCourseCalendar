@@ -9,6 +9,7 @@ namespace WeeklyCourseCalendar.Domain
     {
         private readonly HashSet<DayOfWeek> _schoolDays;
         private readonly HashSet<DateTime> _schoolTimes;
+        private readonly HashSet<TimeSlot> _timeSlots;
 
         public DateTime SemesterStartDate { get; set; }
 
@@ -21,6 +22,7 @@ namespace WeeklyCourseCalendar.Domain
             SemesterName = semesterName;
             SemesterStartDate = semesterStartDate;
             SemesterEndDate = semesterEndDate;
+            _timeSlots = new HashSet<TimeSlot>();
 
             _schoolDays = new HashSet<DayOfWeek>
             {
@@ -56,6 +58,11 @@ namespace WeeklyCourseCalendar.Domain
                 _schoolTimes.Add(time);
                 time = time.AddMinutes(slotDurationInMinutes);
             }
+        }
+
+        public IEnumerable<TimeSlot> GetTimeSlots()
+        {
+            return _timeSlots.ToList();
         }
     }
 }

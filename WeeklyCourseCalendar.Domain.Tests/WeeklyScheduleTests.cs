@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -37,6 +38,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             string actualSemesterName = weeklySchedule.SemesterName;
             DateTime actualSemesterStartDate = weeklySchedule.SemesterStartDate;
             DateTime actualSemesterEndDate = weeklySchedule.SemesterEndDate;
+            IEnumerable<TimeSlot> timeSlots = weeklySchedule.GetTimeSlots();
 
             Assert.Equal(expectedSchoolDaysCount, actualSchoolDaysCount);
             Assert.Equal(expectedSchoolTimesCount, actualSchoolTimesCount);
