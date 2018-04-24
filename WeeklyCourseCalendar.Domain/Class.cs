@@ -10,7 +10,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public string Title { get; set; }
 
-        public DaysOfWeek Days { get; set; }
+        public DayOfWeek Day { get; set; }
 
         public DateTime StartTime { get; set; }
 

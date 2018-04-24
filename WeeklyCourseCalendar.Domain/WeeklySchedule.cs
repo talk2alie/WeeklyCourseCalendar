@@ -7,7 +7,20 @@ namespace WeeklyCourseCalendar.Domain
 {
     public class WeeklySchedule
     {
-        private readonly HashSet<TimeSlot> _allocatedTimeSlots;
+        private readonly HashSet<TimeSlot> _availableTimeSlots;
+
+        public List<DayOfWeek> SchooldDays => new List<DayOfWeek>
+        {
+            DayOfWeek.Monday,
+            DayOfWeek.Tuesday,
+            DayOfWeek.Wednesday,
+            DayOfWeek.Thursday,
+            DayOfWeek.Friday
+        };
+
+        public DateTime SchoolStartTime => DateTime.Parse("8:00 AM");
+
+        public DateTime SchoolEndTime => DateTime.Parse("9:00 PM");
 
         public string SemesterName { get; set; }
 
@@ -15,12 +28,12 @@ namespace WeeklyCourseCalendar.Domain
 
         public DateTime SemesterEndDate { get; set; }
 
-        public int AllocatedTimeSlotsCount => _allocatedTimeSlots.Count;
+        public int AllocatedTimeSlotsCount => _availableTimeSlots.Count;
 
         public WeeklySchedule()
         {
             const int maximumNumberOfSlots = 157;
-            _allocatedTimeSlots = new HashSet<TimeSlot>(maximumNumberOfSlots);
+            _availableTimeSlots = new HashSet<TimeSlot>(maximumNumberOfSlots);
         }
 
         public void AddClassToTimeSlots(Class @class)
@@ -29,28 +42,28 @@ namespace WeeklyCourseCalendar.Domain
             const int slotDurationInMinutes = 5;
             while (slotTime.TimeOfDay <= @class.EndTime.TimeOfDay)
             {
-                TimeSlot timeSlot = FindOrCreateTimeSlotFromDaysAndTime(@class.Days, slotTime);
+                TimeSlot timeSlot = FindOrCreateTimeSlotFromDaysAndTime(@class.Day, slotTime);
                 timeSlot.AddClass(@class);
                 slotTime = slotTime.AddMinutes(slotDurationInMinutes);
             }
         }
 
-        private TimeSlot FindOrCreateTimeSlotFromDaysAndTime(DaysOfWeek slotDays, DateTime slotTime)
+        private TimeSlot FindOrCreateTimeSlotFromDaysAndTime(DayOfWeek slotDays, DateTime slotTime)
         {
             string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(slotDays, slotTime);
-            TimeSlot timeSlot = _allocatedTimeSlots
+            TimeSlot timeSlot = _availableTimeSlots
                 .SingleOrDefault(slot => slot.Id.Equals(slotId, StringComparison.InvariantCulture));
             if (timeSlot == null)
             {
                 timeSlot = new TimeSlot(slotDays, slotTime);
-                _allocatedTimeSlots.Add(timeSlot);
+                _availableTimeSlots.Add(timeSlot);
             }
             return timeSlot;
         }
 
         public List<TimeSlot> GetAllocatedTimeSlots()
         {
-            return _allocatedTimeSlots.ToList();
+            return _availableTimeSlots.ToList();
         }
     }
 }

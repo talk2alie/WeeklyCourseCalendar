@@ -13,7 +13,7 @@ namespace WeeklyCourseCalendar.Domain
 
         private const int _acceptedNumberOfClasses = 10;
 
-        public DaysOfWeek Days { get; }
+        public DayOfWeek Days { get; }
 
         public DateTime Time { get; }
 
@@ -25,7 +25,7 @@ namespace WeeklyCourseCalendar.Domain
 
         public int MaximumCapacity => _acceptedNumberOfClasses;
 
-        public TimeSlot(DaysOfWeek day, DateTime time)
+        public TimeSlot(DayOfWeek day, DateTime time)
         {
             if (TheGivenDayIsNotASchoolDay(day))
             {
@@ -43,10 +43,10 @@ namespace WeeklyCourseCalendar.Domain
             _classes = new HashSet<Class>(_acceptedNumberOfClasses);
         }
 
-        private bool TheGivenDayIsNotASchoolDay(DaysOfWeek day)
+        private bool TheGivenDayIsNotASchoolDay(DayOfWeek day)
         {
             // At Villanova University, weekend days are not school days
-            return (day.HasFlag(DaysOfWeek.Saturday) || day.HasFlag(DaysOfWeek.Sunday)) ? true : false;
+            return (day == DayOfWeek.Saturday || day == DayOfWeek.Sunday) ? true : false;
         }
 
         private bool TheGivenTimeIsOutsideSchoolHours(DateTime time)
@@ -82,7 +82,7 @@ namespace WeeklyCourseCalendar.Domain
 
         private bool TheGivenClassCannnotOccupyThisSlot(Class @class)
         {
-            if (TheGivenDayIsNotASchoolDay(@class.Days))
+            if (TheGivenDayIsNotASchoolDay(@class.Day))
             {
                 return true;
             }

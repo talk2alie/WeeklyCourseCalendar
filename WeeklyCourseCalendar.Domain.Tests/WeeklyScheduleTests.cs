@@ -30,7 +30,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var validClass = new Class
             {
-                Days = DaysOfWeek.Tuesday | DaysOfWeek.Thursday,
+                Day = DayOfWeek.Tuesday,
                 EndTime = DateTime.Parse("9:45 AM"),
                 Instructors = "Mary Angela Papalaskari",
                 Location = "TBA",
@@ -47,6 +47,40 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Assert
             Assert.Equal(expectedAllocatedTimeSlotsCount, actualAllocatedTimeSlotsCount);
+        }
+
+        //[Fact, Trait("Category", "WeeklySchedule")]
+        //public void AddClassToTimeSlots_ExistingTimeSlots_TimeSlotsShouldContainClass()
+        //{
+        //    // Arrange
+        //    AddOne1Hour15MinutesClassToWeeklySchedule();
+        //    var validClass = new Class
+        //    {
+        //        Day = DayOfWeek.Thursday,
+        //        EndTime = DateTime.Parse("9:45 AM"),
+        //        Instructors = "Mary Angela Papalaskari",
+        //        Location = "TBA",
+        //        Name = "CSC 1051",
+        //        Section = "001",
+        //        StartTime = DateTime.Parse("8:30 AM"),
+        //        Title = "Algorithms & Data Struc I"
+        //    };
+        //}
+
+        private void AddOne1Hour15MinutesClassToWeeklySchedule()
+        {
+            var validClass = new Class
+            {
+                Day = DayOfWeek.Tuesday | DayOfWeek.Thursday,
+                EndTime = DateTime.Parse("9:00 AM"),
+                Instructors = "Mary Angela Papalaskari",
+                Location = "TBA",
+                Name = "CSC 1052",
+                Section = "001",
+                StartTime = DateTime.Parse("8:30 AM"),
+                Title = "Algorithms & Data Struc I"
+            };
+            _weeklySchedule.AddClassToTimeSlots(validClass);
         }
     }
 }

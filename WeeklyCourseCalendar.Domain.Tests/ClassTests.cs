@@ -24,7 +24,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -49,7 +49,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -61,7 +61,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G86",
@@ -84,7 +84,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -96,7 +96,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G86",
@@ -119,7 +119,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -144,7 +144,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -170,7 +170,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -182,7 +182,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G86",
@@ -206,7 +206,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -218,7 +218,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             var rightSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("10:00 AM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G86",
@@ -242,7 +242,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var leftSide = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
@@ -268,7 +268,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             // Arrange
             var @class = new Class
             {
-                Days = DaysOfWeek.Monday | DaysOfWeek.Wednesday | DaysOfWeek.Friday,
+                Day = DayOfWeek.Monday | DayOfWeek.Wednesday | DayOfWeek.Friday,
                 EndTime = DateTime.Parse("9:00 PM"),
                 Instructors = "Kristen Obermyer",
                 Location = "Mendel G87",
