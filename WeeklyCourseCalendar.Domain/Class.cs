@@ -54,7 +54,7 @@ namespace WeeklyCourseCalendar.Domain
         {
             return $"{Name}-{Section}{Environment.NewLine}" +
                    $"{Title}{Environment.NewLine}" +
-                   $"{StartTime.ToShortTimeString()}-{EndTime.ToShortTimeString()}";
+                   $"{StartTime.ToShortTimeString()} to {EndTime.ToShortTimeString()}";
         }
     }
 }
