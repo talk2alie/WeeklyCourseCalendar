@@ -25,6 +25,8 @@ namespace WeeklyCourseCalendar.Domain
 
         public int MaximumCapacity => _acceptedNumberOfClasses;
 
+        public int SlotSpan { get; set; }
+
         public TimeSlot(DayOfWeek day, DateTime time)
         {
             if (TheGivenDayIsNotASchoolDay(day))
@@ -108,7 +110,7 @@ namespace WeeklyCourseCalendar.Domain
 
             if (obj is TimeSlot timeSlot)
             {
-                return Id.Equals(timeSlot.Id);
+                return Id.Equals(timeSlot.Id) && SlotSpan == timeSlot.SlotSpan;
             }
 
             return false;
@@ -116,12 +118,12 @@ namespace WeeklyCourseCalendar.Domain
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return Id.GetHashCode() ^ SlotSpan.GetHashCode();
         }
 
         public override string ToString()
         {
-            return Id;
+            return $"{Id}; Spans {SlotSpan}" + (SlotSpan > 1 ? "s" : String.Empty);
         }
     }
 }

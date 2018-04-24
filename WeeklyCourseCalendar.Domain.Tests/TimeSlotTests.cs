@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace WeeklyCourseCalendar.Domain.Tests
@@ -359,7 +357,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Act
             string toStringValue = validTimeSlot.ToString();
-            string idValue = validTimeSlot.Id;
+            string idValue = $"{validTimeSlot.Id}; Spans {validTimeSlot.SlotSpan}" +
+                (validTimeSlot.SlotSpan > 1 ? "s" : String.Empty);
 
             // Assert
             Assert.Equal(toStringValue, idValue);
