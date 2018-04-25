@@ -38,7 +38,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             string actualSemesterName = weeklySchedule.SemesterName;
             DateTime actualSemesterStartDate = weeklySchedule.SemesterStartDate;
             DateTime actualSemesterEndDate = weeklySchedule.SemesterEndDate;
-            IEnumerable<TimeSlot> timeSlots = weeklySchedule.GetTimeSlots();
+            IEnumerable<TimeSlot> timeSlots = weeklySchedule.TimeSlots;
 
             Assert.Equal(expectedSchoolDaysCount, actualSchoolDaysCount);
             Assert.Equal(expectedSchoolTimesCount, actualSchoolTimesCount);
@@ -67,7 +67,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Act
             _weeklySchedule.AddClass(newClass);
-            int actualSlotSpan = _weeklySchedule.GetTimeSlots().FirstOrDefault().SlotSpan;
+            int actualSlotSpan = _weeklySchedule.TimeSlots.FirstOrDefault().SlotSpan;
 
             // Assert
             Assert.Equal(expectedSlotSpan, actualSlotSpan);
@@ -78,9 +78,9 @@ namespace WeeklyCourseCalendar.Domain.Tests
         {
             // Arrange
             AddClassToSchedule();
-            int expectedSlotsCount = _weeklySchedule.GetTimeSlots().Count();
+            int expectedSlotsCount = _weeklySchedule.TimeSlots.Count();
             const int classesAddedCount = 1;
-            int expectedClassesInSlotCount = _weeklySchedule.GetTimeSlots().First().OccupiedSpacesCount + classesAddedCount;
+            int expectedClassesInSlotCount = _weeklySchedule.TimeSlots.First().OccupiedSpacesCount + classesAddedCount;
 
             var classToAdd = new Class
             {
@@ -96,8 +96,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Act
             _weeklySchedule.AddClass(classToAdd);
-            int actualSlotsCount = _weeklySchedule.GetTimeSlots().Count();
-            int actualClassesInSlotCount = _weeklySchedule.GetTimeSlots().First().OccupiedSpacesCount;
+            int actualSlotsCount = _weeklySchedule.TimeSlots.Count();
+            int actualClassesInSlotCount = _weeklySchedule.TimeSlots.First().OccupiedSpacesCount;
 
             // Assert
             Assert.Equal(expectedSlotsCount, actualSlotsCount);

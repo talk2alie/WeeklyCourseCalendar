@@ -17,6 +17,8 @@ namespace WeeklyCourseCalendar.Domain
 
         public string SemesterName { get; }
 
+        public IEnumerable<TimeSlot> TimeSlots => _timeSlots.ToList();
+
         public WeeklySchedule(string semesterName, DateTime semesterStartDate, DateTime semesterEndDate)
         {
             SemesterName = semesterName;
@@ -58,11 +60,6 @@ namespace WeeklyCourseCalendar.Domain
                 _schoolTimes.Add(time);
                 time = time.AddMinutes(slotDurationInMinutes);
             }
-        }
-
-        public IEnumerable<TimeSlot> GetTimeSlots()
-        {
-            return _timeSlots.ToList();
         }
 
         public void AddClass(Class newClass)
