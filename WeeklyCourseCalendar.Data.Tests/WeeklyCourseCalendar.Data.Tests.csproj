@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="xunit.core" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeeklyCourseCalendar.Data\WeeklyCourseCalendar.Data.csproj" />
+  </ItemGroup>
+
 </Project>

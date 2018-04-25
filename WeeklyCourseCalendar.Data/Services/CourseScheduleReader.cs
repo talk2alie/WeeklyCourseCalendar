@@ -6,8 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace WeeklyCourseCalendar.Data.Services
 {
-    public class CourseScheduleReader
+    public class CourseScheduleReader : ICourseScheduleReader
     {
+        public IEnumerable<Course> ReadFromFile(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
         private List<Course> GetCoursesFromText(IEnumerable<string> scheduleText)
         {
             List<string> individualCourseTexts = DivideTextIntoIndividualCourseTexts(scheduleText);
