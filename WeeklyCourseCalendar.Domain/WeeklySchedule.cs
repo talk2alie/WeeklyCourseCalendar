@@ -66,7 +66,8 @@ namespace WeeklyCourseCalendar.Domain
         {
             TimeSpan classDuration = newClass.EndTime.TimeOfDay - newClass.StartTime.TimeOfDay;
             const int slotDurationInMinutes = 5;
-            int numberOfTimeSlotsClassSpans = (int)classDuration.TotalMinutes / slotDurationInMinutes;
+            const int slotOffset = 1;
+            int numberOfTimeSlotsClassSpans = ((int)classDuration.TotalMinutes / slotDurationInMinutes) + slotOffset;
 
             string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(newClass.Day, newClass.StartTime);
             TimeSlot timeSlot = _timeSlots.SingleOrDefault(slot =>

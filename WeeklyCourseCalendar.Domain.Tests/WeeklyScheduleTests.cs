@@ -63,7 +63,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
                 StartTime = DateTime.Parse("06:10 pm"),
                 Title = "Programming for All"
             };
-            const int expectedSlotSpan = 32;
+            const int expectedSlotSpan = 33;
 
             // Act
             _weeklySchedule.AddClass(newClass);
