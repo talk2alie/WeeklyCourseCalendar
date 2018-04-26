@@ -58,10 +58,7 @@ namespace WeeklyCourseCalendar.Domain
                 time.TimeOfDay > _schoolEndTime.TimeOfDay) ? true : false;
         }
 
-        public IEnumerable<Class> GetClasses()
-        {
-            return _classes.ToList();
-        }
+        public IEnumerable<Class> Classes => _classes.ToList();
 
         public void AddClass(Class @class)
         {

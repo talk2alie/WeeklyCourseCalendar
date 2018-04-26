@@ -31,7 +31,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
         public void WriteAsHtml_WeeklySchedule_ProducesAValidHtmlFile()
         {
             // Arrange
-            const string outputPath = "schedule.html";
+            string outputPath = "schedule.data";
             const string semesterName = "Fall 2018";
             var semesterStartDate = DateTime.Parse("August 16, 2018");
             var semesterEndDate = DateTime.Parse("December 7, 2018");
@@ -43,7 +43,7 @@ namespace WeeklyCourseCalendar.Domain.Tests
             {
                 weeklySchedule.AddClass(@class);
             }
-            _weeklyScheduleWriter.WriteAsHtml(weeklySchedule, outputPath);
+            outputPath = _weeklyScheduleWriter.WriteAsHtml(weeklySchedule, outputPath);
 
             // Assert
             Assert.True(File.Exists(outputPath));
@@ -85,6 +85,17 @@ namespace WeeklyCourseCalendar.Domain.Tests
                     Section = "001",
                     StartTime = DateTime.Parse("8:30 AM"),
                     Title = "Algorithms & Data Struc I"
+                },
+                new Class
+                {
+                    Day = DayOfWeek.Tuesday,
+                    EndTime = DateTime.Parse("9:45 AM"),
+                    Instructors = "Don Goelman",
+                    Location = "Mendell G87",
+                    Name = "CSC 1058",
+                    Section = "001",
+                    StartTime = DateTime.Parse("8:30 AM"),
+                    Title = "Introduction to Database Systems"
                 },
                 new Class
                 {

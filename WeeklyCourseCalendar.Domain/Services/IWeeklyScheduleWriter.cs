@@ -2,6 +2,6 @@
 {
     public interface IWeeklyScheduleWriter
     {
-        void WriteAsHtml(WeeklySchedule weeklySchedule, string outputPath);
+        string WriteAsHtml(WeeklySchedule weeklySchedule, string outputPath);
     }
 }
