@@ -8,8 +8,6 @@ namespace WeeklyCourseCalendar.Domain.Services
 {
     public class WeeklyScheduleWriter : IWeeklyScheduleWriter
     {
-        private Dictionary<string, string> _columns;
-
         public string WriteAsHtml(WeeklySchedule weeklySchedule, string outputPath)
         {
             string weeklyScheduleHtmlPage = GetDefaultHtmlPageTemplate();
@@ -75,13 +73,10 @@ namespace WeeklyCourseCalendar.Domain.Services
 
         private string SetHtmlTableHeaderRow(WeeklySchedule weeklySchedule, string weeklyScheduleHtmlPage)
         {
-            _columns = new Dictionary<string, string>();
             string theadContent = $"<th>Date</th>";
-            _columns.Add("Date", "<td>&nbsp;</td>");
             foreach (DateTime time in weeklySchedule.SchoolTimes)
             {
                 theadContent += $"<th>{time.ToShortTimeString()}</th>";
-                _columns.Add(time.ToShortTimeString(), "<td>&nbsp;</td>");
             };
             weeklyScheduleHtmlPage = weeklyScheduleHtmlPage.Replace("#TableHeader#", theadContent);
             return weeklyScheduleHtmlPage;
@@ -99,6 +94,7 @@ namespace WeeklyCourseCalendar.Domain.Services
 
         private string SetHtmlTableBodyRows(WeeklySchedule weeklySchedule, string weeklyScheduleHtmlPage)
         {
+            string tbodyContent = String.Empty;
             foreach (DayOfWeek day in weeklySchedule.SchoolDays)
             {
                 int rowSpan = CalculateRowsDaySpans(day, weeklySchedule);
@@ -107,10 +103,73 @@ namespace WeeklyCourseCalendar.Domain.Services
                     continue;
                 }
 
+                var dayColumns = new Dictionary<string, string>();
+
+                int rowIndex = 0;
+                var dayRows = new Dictionary<string, string>();
+                while (rowIndex < rowSpan)
+                {
+                    string row = String.Empty;
+                    if (rowIndex == 0)
+                    {
+                        row += $"<tr><td rowspan='{rowSpan}'>{day.ToString()}</td>";
+                    }
+                    else
+                    {
+                        row = "<tr>";
+                    }
+                    dayRows.Add(GetRowIdFromIndex(rowIndex), row);
+
+                    // Populate all columns for a given row within a day
+                    foreach (DateTime time in weeklySchedule.SchoolTimes)
+                    {
+                        dayColumns.Add(GetColumnId(day, time, rowIndex), $"<td>&nbsp;</td>");
+                    }
+                    rowIndex++;
+                }
+
                 foreach (DateTime time in weeklySchedule.SchoolTimes)
                 {
+                    string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(day, time);
+                    TimeSlot timeSlot = weeklySchedule.TimeSlots.SingleOrDefault(slot =>
+                        slot.Id.Equals(slotId, StringComparison.InvariantCulture));
+                    if (timeSlot == null)
+                    {
+                        continue;
+                    }
+
+                    for (int classIndex = 0; classIndex < timeSlot.Classes.Count(); classIndex++)
+                    {
+                        Class @class = timeSlot.Classes.ElementAt(classIndex);
+                        string columnId = GetColumnId(day, @class.StartTime, classIndex);
+                        string td = dayColumns[columnId];
+
+                        td = $@"<td colspan={timeSlot.SlotSpan}>" +
+                                      $"{@class.Name} - {@class.Section}<br>" +
+                                      $"{@class.Title}<br>" +
+                                      $"{@class.StartTime.ToShortTimeString()} to {@class.EndTime.ToShortTimeString()}" +
+                                "</td>";
+                        dayColumns[columnId] = td;
+                        RemoveSpannedOverColumns(@class.StartTime, @class.EndTime, classIndex, day, dayColumns);
+                    }
+                }
+
+                rowIndex = 0;
+                while (rowIndex < rowSpan)
+                {
+                    string rowData = dayRows[GetRowIdFromIndex(rowIndex)];
+                    IEnumerable<string> keys = dayColumns.Keys.Where(key => key.Contains($"_{rowIndex}_"));
+
+                    foreach (string key in keys)
+                    {
+                        rowData += dayColumns[key];
+                    }
+                    tbodyContent += rowData + "</tr>";
+                    rowIndex++;
                 }
             }
+
+            weeklyScheduleHtmlPage = weeklyScheduleHtmlPage.Replace("#TableBody#", tbodyContent);
             return weeklyScheduleHtmlPage;
         }
 
@@ -127,6 +186,23 @@ namespace WeeklyCourseCalendar.Domain.Services
         private string GetRowIdFromIndex(int index)
         {
             return $"row{index + 1}";
+        }
+
+        private string GetColumnId(DayOfWeek day, DateTime time, int rowIndex)
+        {
+            return $"{day.ToString()}_{rowIndex}_{time.ToShortTimeString()}".Replace(" ", "");
+        }
+
+        private void RemoveSpannedOverColumns(DateTime startTime,
+            DateTime endTime, int classIndex, DayOfWeek day, Dictionary<string, string> dayColumns)
+        {
+            DateTime currentTime = startTime.AddMinutes(5);
+            while (currentTime <= endTime)
+            {
+                string columnId = GetColumnId(day, currentTime, classIndex);
+                dayColumns.Remove(columnId);
+                currentTime = currentTime.AddMinutes(5);
+            }
         }
     }
 }

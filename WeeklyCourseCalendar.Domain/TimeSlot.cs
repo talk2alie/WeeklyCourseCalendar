@@ -58,7 +58,7 @@ namespace WeeklyCourseCalendar.Domain
                 time.TimeOfDay > _schoolEndTime.TimeOfDay) ? true : false;
         }
 
-        public IEnumerable<Class> Classes => _classes.ToList();
+        public IEnumerable<Class> Classes => _classes.OrderByDescending(@class => @class.StartTime);
 
         public void AddClass(Class @class)
         {
