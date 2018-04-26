@@ -19,6 +19,10 @@ namespace WeeklyCourseCalendar.Domain
 
         public IEnumerable<TimeSlot> TimeSlots => _timeSlots.ToList();
 
+        public IEnumerable<DayOfWeek> SchoolDays => _schoolDays.ToList();
+
+        public IEnumerable<DateTime> SchoolTimes => _schoolTimes.ToList();
+
         public WeeklySchedule(string semesterName, DateTime semesterStartDate, DateTime semesterEndDate)
         {
             SemesterName = semesterName;
@@ -36,16 +40,6 @@ namespace WeeklyCourseCalendar.Domain
             };
             _schoolTimes = new HashSet<DateTime>();
             LoadSchoolTimes();
-        }
-
-        public IEnumerable<DayOfWeek> GetSchoolDays()
-        {
-            return _schoolDays;
-        }
-
-        public IEnumerable<DateTime> GetSchoolTimes()
-        {
-            return _schoolTimes;
         }
 
         private void LoadSchoolTimes()

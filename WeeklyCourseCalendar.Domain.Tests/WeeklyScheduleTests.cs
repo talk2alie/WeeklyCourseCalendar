@@ -32,8 +32,8 @@ namespace WeeklyCourseCalendar.Domain.Tests
 
             // Assert
             Assert.NotNull(weeklySchedule);
-            int actualSchoolDaysCount = weeklySchedule.GetSchoolDays().ToList().Count;
-            int actualSchoolTimesCount = weeklySchedule.GetSchoolTimes().ToList().Count;
+            int actualSchoolDaysCount = weeklySchedule.SchoolDays.ToList().Count;
+            int actualSchoolTimesCount = weeklySchedule.SchoolTimes.ToList().Count;
 
             string actualSemesterName = weeklySchedule.SemesterName;
             DateTime actualSemesterStartDate = weeklySchedule.SemesterStartDate;
