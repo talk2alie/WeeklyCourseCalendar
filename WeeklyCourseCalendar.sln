@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeeklyCourseCalendar.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeeklyCourseCalendar.Domain.Tests", "WeeklyCourseCalendar.Domain.Tests\WeeklyCourseCalendar.Domain.Tests.csproj", "{F4C0E08D-0381-4881-ACCD-24E75268F0E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeeklyCourseCalendar.Data", "WeeklyCourseCalendar.Data\WeeklyCourseCalendar.Data.csproj", "{667617D8-2AFF-4DDB-836B-DAA77E71E43A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeeklyCourseCalendar.Data", "WeeklyCourseCalendar.Data\WeeklyCourseCalendar.Data.csproj", "{667617D8-2AFF-4DDB-836B-DAA77E71E43A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeeklyCourseCalendar.Data.Tests", "WeeklyCourseCalendar.Data.Tests\WeeklyCourseCalendar.Data.Tests.csproj", "{A7C8D1ED-8CE0-4B8C-AAB8-8BF025939E6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeeklyCourseCalendar.Data.Tests", "WeeklyCourseCalendar.Data.Tests\WeeklyCourseCalendar.Data.Tests.csproj", "{4D5353AE-A553-49CB-9309-512EB31F9BDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{667617D8-2AFF-4DDB-836B-DAA77E71E43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{667617D8-2AFF-4DDB-836B-DAA77E71E43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{667617D8-2AFF-4DDB-836B-DAA77E71E43A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7C8D1ED-8CE0-4B8C-AAB8-8BF025939E6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7C8D1ED-8CE0-4B8C-AAB8-8BF025939E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7C8D1ED-8CE0-4B8C-AAB8-8BF025939E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7C8D1ED-8CE0-4B8C-AAB8-8BF025939E6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5353AE-A553-49CB-9309-512EB31F9BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5353AE-A553-49CB-9309-512EB31F9BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5353AE-A553-49CB-9309-512EB31F9BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5353AE-A553-49CB-9309-512EB31F9BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,17 +11,19 @@ namespace WeeklyCourseCalendar.Data.Services
     {
         public IEnumerable<Course> ReadFromFile(string filePath)
         {
-            throw new NotImplementedException();
+            IEnumerable<string> courseScheduleText = File.ReadLines(filePath)
+                .Where(line => !line.StartsWith("Sections Found for") && !String.IsNullOrWhiteSpace(line));
+            return GetCoursesFromText(courseScheduleText);
         }
 
-        private List<Course> GetCoursesFromText(IEnumerable<string> scheduleText)
+        private IEnumerable<Course> GetCoursesFromText(IEnumerable<string> scheduleText)
         {
-            List<string> individualCourseTexts = DivideTextIntoIndividualCourseTexts(scheduleText);
-            List<Course> courses = GetIndividualCoursesFromIndividualCourseTexts(individualCourseTexts);
+            IEnumerable<string> individualCourseTexts = DivideTextIntoIndividualCourseTexts(scheduleText);
+            IEnumerable<Course> courses = GetIndividualCoursesFromIndividualCourseTexts(individualCourseTexts);
             return courses;
         }
 
-        private List<string> DivideTextIntoIndividualCourseTexts(IEnumerable<string> linesFromScheduleData)
+        private IEnumerable<string> DivideTextIntoIndividualCourseTexts(IEnumerable<string> linesFromScheduleData)
         {
             const string courseNumberRegexText = @"^\b[A-Z]{3}\b\s*\b\d{4,5}\b";
             var scheduleTexts = new List<string>();
@@ -45,7 +48,7 @@ namespace WeeklyCourseCalendar.Data.Services
             return scheduleTexts;
         }
 
-        private List<Course> GetIndividualCoursesFromIndividualCourseTexts(List<string> individualScheduleTexts)
+        private IEnumerable<Course> GetIndividualCoursesFromIndividualCourseTexts(IEnumerable<string> individualScheduleTexts)
         {
             IEnumerable<Course> courses = individualScheduleTexts.Select(text => GetCourseFromCourseScheduleText(text));
             return courses.ToList();
@@ -103,11 +106,11 @@ namespace WeeklyCourseCalendar.Data.Services
                     course.Attributes = attributes.Trim();
                 }
             }
-            course.Schedules = GetCourseSchedulesFromText(courseScheduleText);
+            course.Schedules = GetCourseSchedulesFromText(courseScheduleText).ToList();
             return course;
         }
 
-        private List<Schedule> GetCourseSchedulesFromText(string courseScheduleText)
+        private IEnumerable<Schedule> GetCourseSchedulesFromText(string courseScheduleText)
         {
             var schedules = new List<Schedule>();
 
