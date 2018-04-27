@@ -5,4 +5,20 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeeklyCourseCalendar.Data\WeeklyCourseCalendar.Data.csproj" />
+    <ProjectReference Include="..\WeeklyCourseCalendar.Domain\WeeklyCourseCalendar.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="schedule.data">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -131,26 +131,32 @@ namespace WeeklyCourseCalendar.Domain.Services
                 foreach (DateTime time in weeklySchedule.SchoolTimes)
                 {
                     string slotId = TimeSlotHelpers.GenerateIdFromDaysAndTime(day, time);
-                    TimeSlot timeSlot = weeklySchedule.TimeSlots.SingleOrDefault(slot =>
+                    IEnumerable<TimeSlot> timeSlots = weeklySchedule.TimeSlots.Where(slot =>
                         slot.Id.Equals(slotId, StringComparison.InvariantCulture));
-                    if (timeSlot == null)
+                    foreach (TimeSlot timeSlot in timeSlots)
                     {
-                        continue;
-                    }
+                        if (timeSlot == null)
+                        {
+                            continue;
+                        }
 
-                    for (int classIndex = 0; classIndex < timeSlot.Classes.Count(); classIndex++)
-                    {
-                        Class @class = timeSlot.Classes.ElementAt(classIndex);
-                        string columnId = GetColumnId(day, @class.StartTime, classIndex);
-                        string td = dayColumns[columnId];
+                        for (int classIndex = 0; classIndex < timeSlot.Classes.Count(); classIndex++)
+                        {
+                            Class @class = timeSlot.Classes.ElementAt(classIndex);
+                            string columnId = GetColumnId(day, @class.StartTime, classIndex);
+                            if (dayColumns.ContainsKey(columnId))
+                            {
+                                string td = dayColumns[columnId];
 
-                        td = $@"<td colspan={timeSlot.SlotSpan}>" +
-                                      $"{@class.Name} - {@class.Section}<br>" +
-                                      $"{@class.Title}<br>" +
-                                      $"{@class.StartTime.ToShortTimeString()} to {@class.EndTime.ToShortTimeString()}" +
-                                "</td>";
-                        dayColumns[columnId] = td;
-                        RemoveSpannedOverColumns(@class.StartTime, @class.EndTime, classIndex, day, dayColumns);
+                                td = $@"<td colspan={timeSlot.SlotSpan}>" +
+                                              $"{@class.Name} - {@class.Section}<br>" +
+                                              $"{@class.Title}<br>" +
+                                              $"{@class.StartTime.ToShortTimeString()} to {@class.EndTime.ToShortTimeString()}" +
+                                        "</td>";
+                                dayColumns[columnId] = td;
+                                RemoveSpannedOverColumns(@class.StartTime, @class.EndTime, classIndex, day, dayColumns);
+                            }
+                        }
                     }
                 }
 
