@@ -33,7 +33,7 @@ namespace WeeklyCourseCalendar.App
             }
 
             IWeeklyScheduleWriter writer = serviceBuilder.GetRequiredService<IWeeklyScheduleWriter>();
-            string outputFileName = "schedule";
+            string outputFileName = args[1];
             outputFileName = writer.WriteAsHtml(weeklySchedule, outputFileName);
         }
     }

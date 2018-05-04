@@ -15,10 +15,4 @@
     <ProjectReference Include="..\WeeklyCourseCalendar.Domain\WeeklyCourseCalendar.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="schedule.data">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
