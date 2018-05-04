@@ -5,6 +5,12 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win7-x64;win7-x86;win10-x86;win10-x64;ubuntu-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
@@ -14,5 +20,4 @@
     <ProjectReference Include="..\WeeklyCourseCalendar.Data\WeeklyCourseCalendar.Data.csproj" />
     <ProjectReference Include="..\WeeklyCourseCalendar.Domain\WeeklyCourseCalendar.Domain.csproj" />
   </ItemGroup>
-
 </Project>
